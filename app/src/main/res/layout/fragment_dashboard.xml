@@ -1,0 +1,631 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background_dark"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:id="@+id/mainLayout">
+
+            <!-- Header Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardElevation="4dp"
+                app:cardCornerRadius="16dp"
+                app:cardBackgroundColor="@color/surface_dark">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="24dp"
+                    android:gravity="center_horizontal">
+
+                    <!-- Optional: App Icon -->
+                    <ImageView
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:src="@mipmap/ic_launcher_round"
+                        android:contentDescription="App Icon"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="8dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Activa Dashboard"
+                        android:textSize="28sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/primary"
+                        android:fontFamily="sans-serif-medium"
+                        android:gravity="center"
+                        android:layout_marginBottom="12dp"/>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/startGpsButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Start GPS"
+                            android:textSize="12sp"
+                            android:layout_marginEnd="8dp"
+                            style="@style/Widget.MaterialComponents.Button.TextButton"/>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/stopGpsButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Stop GPS"
+                            android:textSize="12sp"
+                            android:layout_marginEnd="8dp"
+                            style="@style/Widget.MaterialComponents.Button.TextButton"/>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/connectEspButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Connect ESP"
+                            android:textSize="12sp"
+                            style="@style/Widget.MaterialComponents.Button.TextButton"/>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="12dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center_horizontal">
+
+                        <TextView
+                            android:id="@+id/gpsStatusText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="GPS: Waiting..."
+                            android:textAppearance="@style/TextAppearance.ActivaDashboard.Body2"
+                            android:textColor="@color/text_secondary"
+                            android:layout_marginBottom="4dp"/>
+
+                        <TextView
+                            android:id="@+id/espStatus"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="ESP8266: Disconnected"
+                            android:textAppearance="@style/TextAppearance.ActivaDashboard.Body2"
+                            android:textColor="@color/text_secondary"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Speed Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardElevation="4dp"
+                app:cardCornerRadius="12dp"
+                app:cardBackgroundColor="@color/surface_dark">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Current Speed"
+                        android:textAppearance="@style/TextAppearance.ActivaDashboard.Subtitle2"
+                        android:textColor="@color/text_secondary"
+                        android:layout_marginBottom="8dp"/>
+
+                    <TextView
+                        android:id="@+id/speedValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0.0"
+                        android:textAppearance="@style/TextAppearance.ActivaDashboard.Number"
+                        android:textSize="64sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/primary"
+                        android:layout_marginBottom="4dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="km/h"
+                        android:textAppearance="@style/TextAppearance.ActivaDashboard.Caption"
+                        android:textColor="@color/text_secondary"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Trip Info Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardElevation="4dp"
+                app:cardCornerRadius="16dp"
+                app:cardBackgroundColor="@color/surface_dark">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="16dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Trip Information"
+                            android:textAppearance="@style/TextAppearance.ActivaDashboard.Subtitle1"
+                            android:textColor="@color/primary"
+                            android:textStyle="bold"/>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/resetOdometerButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="RESET"
+                            android:textAllCaps="true"
+                            android:textColor="?attr/colorSecondary"
+                            app:icon="@drawable/ic_baseline_refresh_24"
+                            app:iconTint="?attr/colorSecondary"
+                            app:iconPadding="8dp"
+                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                            android:layout_marginStart="8dp"/>
+                    </LinearLayout>
+
+                    <!-- Odometer -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="12dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Odometer"
+                            android:textAppearance="@style/TextAppearance.ActivaDashboard.Body2"
+                            android:textColor="@color/text_secondary"/>
+
+                        <TextView
+                            android:id="@+id/odometerValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0.0 km"
+                            android:textAppearance="@style/TextAppearance.ActivaDashboard.Number"
+                            android:textColor="@color/primary"
+                            android:textSize="18sp"/>
+                    </LinearLayout>
+
+                    <!-- Trip 1 Section -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Trip 1"
+                        android:textStyle="bold"
+                        android:textColor="@color/text_primary_dark"
+                        android:textSize="16sp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="4dp"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="4dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Distance"
+                            android:textAppearance="@style/TextAppearance.ActivaDashboard.Body2"
+                            android:textColor="@color/text_secondary"/>
+
+                        <TextView
+                            android:id="@+id/trip1DistanceValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0.0 km"
+                            android:textAppearance="@style/TextAppearance.ActivaDashboard.Number"
+                            android:textColor="@color/primary"
+                            android:textSize="18sp"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="4dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Average"
+                            android:textAppearance="@style/TextAppearance.ActivaDashboard.Body2"
+                            android:textColor="@color/text_secondary"/>
+
+                        <TextView
+                            android:id="@+id/trip1AverageValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0.0 km/l"
+                            android:textAppearance="@style/TextAppearance.ActivaDashboard.Number"
+                            android:textColor="@color/primary"
+                            android:textSize="18sp"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="8dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text=""
+                            android:textAppearance="@style/TextAppearance.ActivaDashboard.Body2"/>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/resetTrip1Button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="RESET"
+                            android:textAllCaps="true"
+                            android:textColor="?attr/colorSecondary"
+                            app:icon="@drawable/ic_baseline_refresh_24"
+                            app:iconTint="?attr/colorSecondary"
+                            app:iconPadding="8dp"
+                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                            android:layout_marginStart="8dp"/>
+                    </LinearLayout>
+
+                    <!-- Trip 2 Section -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Trip 2"
+                        android:textStyle="bold"
+                        android:textColor="@color/text_primary_dark"
+                        android:textSize="16sp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="4dp"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="4dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Distance"
+                            android:textAppearance="@style/TextAppearance.ActivaDashboard.Body2"
+                            android:textColor="@color/text_secondary"/>
+
+                        <TextView
+                            android:id="@+id/trip2DistanceValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0.0 km"
+                            android:textAppearance="@style/TextAppearance.ActivaDashboard.Number"
+                            android:textColor="@color/primary"
+                            android:textSize="18sp"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="4dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Average"
+                            android:textAppearance="@style/TextAppearance.ActivaDashboard.Body2"
+                            android:textColor="@color/text_secondary"/>
+
+                        <TextView
+                            android:id="@+id/trip2AverageValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0.0 km/l"
+                            android:textAppearance="@style/TextAppearance.ActivaDashboard.Number"
+                            android:textColor="@color/primary"
+                            android:textSize="18sp"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="8dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text=""
+                            android:textAppearance="@style/TextAppearance.ActivaDashboard.Body2"/>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/resetTrip2Button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="RESET"
+                            android:textAllCaps="true"
+                            android:textColor="?attr/colorSecondary"
+                            app:icon="@drawable/ic_baseline_refresh_24"
+                            app:iconTint="?attr/colorSecondary"
+                            app:iconPadding="8dp"
+                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                            android:layout_marginStart="8dp"/>
+                    </LinearLayout>
+
+                    <!-- Total Distance -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginTop="8dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Total Distance"
+                            android:textAppearance="@style/TextAppearance.ActivaDashboard.Body2"
+                            android:textColor="@color/text_secondary"/>
+
+                        <TextView
+                            android:id="@+id/totalDistanceValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0.0 km"
+                            android:textAppearance="@style/TextAppearance.ActivaDashboard.Number"
+                            android:textColor="@color/primary"
+                            android:textSize="18sp"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Fuel Info Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardElevation="4dp"
+                app:cardCornerRadius="12dp"
+                app:cardBackgroundColor="@color/surface_dark">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="16dp"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Fuel Information"
+                            android:textAppearance="@style/TextAppearance.ActivaDashboard.Subtitle1"
+                            android:textColor="@color/text_primary_dark"/>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/resetFuelFillButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="RESET"
+                            android:textAllCaps="true"
+                            android:textColor="?attr/colorSecondary"
+                            app:icon="@drawable/ic_baseline_refresh_24"
+                            app:iconTint="?attr/colorSecondary"
+                            app:iconPadding="8dp"
+                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                            android:layout_marginStart="8dp"/>
+                    </LinearLayout>
+
+                    <!-- Fuel Level -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="16dp"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Fuel Level"
+                            android:textAppearance="@style/TextAppearance.ActivaDashboard.Subtitle2"
+                            android:textColor="@color/text_secondary"/>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical">
+
+                            <TextView
+                                android:id="@+id/fuelValue"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="0.0"
+                                android:textAppearance="@style/TextAppearance.ActivaDashboard.Number"
+                                android:textSize="36sp"
+                                android:textColor="@color/primary"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="L"
+                                android:textAppearance="@style/TextAppearance.ActivaDashboard.Caption"
+                                android:textColor="@color/text_secondary"
+                                android:layout_marginStart="4dp"/>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Fill Distance -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="16dp"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Fill Distance"
+                            android:textAppearance="@style/TextAppearance.ActivaDashboard.Body2"
+                            android:textColor="@color/text_secondary"/>
+
+                        <TextView
+                            android:id="@+id/fuelFillDistanceValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0.0 km"
+                            android:textAppearance="@style/TextAppearance.ActivaDashboard.Number"
+                            android:textColor="@color/primary"
+                            android:textSize="18sp"/>
+                    </LinearLayout>
+
+                    <!-- Fill Average -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="16dp"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Fill Average"
+                            android:textAppearance="@style/TextAppearance.ActivaDashboard.Body2"
+                            android:textColor="@color/text_secondary"/>
+
+                        <TextView
+                            android:id="@+id/fuelFillAverageValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0.0 km/l"
+                            android:textAppearance="@style/TextAppearance.ActivaDashboard.Number"
+                            android:textColor="@color/primary"
+                            android:textSize="18sp"/>
+                    </LinearLayout>
+
+                    <!-- Economy -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Economy"
+                            android:textAppearance="@style/TextAppearance.ActivaDashboard.Body2"
+                            android:textColor="@color/text_secondary"/>
+
+                        <TextView
+                            android:id="@+id/economyValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0.0 km/L"
+                            android:textAppearance="@style/TextAppearance.ActivaDashboard.Number"
+                            android:textColor="@color/primary"
+                            android:textSize="18sp"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Add these inside the ConstraintLayout or the main layout container, below other buttons like trip restart buttons -->
+            <Button
+                android:id="@+id/restart_lcd_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Restart LCD"
+                app:layout_constraintTop_toBottomOf="@id/resetTrip2Button"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="16dp" />
+
+            <Switch
+                android:id="@+id/auto_restart_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Auto Restart Enabled"
+                app:layout_constraintTop_toBottomOf="@id/restart_lcd_button"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="8dp" />
+
+            <!-- Remove or comment out the Google Map Fragment -->
+            <!-- <fragment
+                android:id="@+id/map"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_marginTop="16dp" /> -->
+
+        </LinearLayout>
+    </ScrollView>
+</layout>

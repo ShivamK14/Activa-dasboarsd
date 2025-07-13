@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.ActivaDashboard" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand colors -->
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryVariant">@color/primary_dark</item>
+        <item name="colorOnPrimary">@color/white</item>
+        
+        <!-- Secondary brand colors -->
+        <item name="colorSecondary">@color/accent</item>
+        <item name="colorSecondaryVariant">@color/accent</item>
+        <item name="colorOnSecondary">@color/white</item>
+        
+        <!-- Status bar color -->
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        
+        <!-- Text appearance -->
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:letterSpacing">0.01</item>
+        <item name="android:lineSpacingMultiplier">1.2</item>
+        
+        <!-- Material text styles -->
+        <item name="textAppearanceHeadline1">@style/TextAppearance.ActivaDashboard.Headline1</item>
+        <item name="textAppearanceHeadline2">@style/TextAppearance.ActivaDashboard.Headline2</item>
+        <item name="textAppearanceHeadline3">@style/TextAppearance.ActivaDashboard.Headline3</item>
+        <item name="textAppearanceHeadline4">@style/TextAppearance.ActivaDashboard.Headline4</item>
+        <item name="textAppearanceHeadline5">@style/TextAppearance.ActivaDashboard.Headline5</item>
+        <item name="textAppearanceHeadline6">@style/TextAppearance.ActivaDashboard.Headline6</item>
+        <item name="textAppearanceSubtitle1">@style/TextAppearance.ActivaDashboard.Subtitle1</item>
+        <item name="textAppearanceSubtitle2">@style/TextAppearance.ActivaDashboard.Subtitle2</item>
+        <item name="textAppearanceBody1">@style/TextAppearance.ActivaDashboard.Body1</item>
+        <item name="textAppearanceBody2">@style/TextAppearance.ActivaDashboard.Body2</item>
+        <item name="textAppearanceButton">@style/TextAppearance.ActivaDashboard.Button</item>
+        <item name="textAppearanceCaption">@style/TextAppearance.ActivaDashboard.Caption</item>
+        <item name="textAppearanceOverline">@style/TextAppearance.ActivaDashboard.Overline</item>
+        
+        <!-- Background colors -->
+        <item name="android:colorBackground">@color/white</item>
+        <item name="colorSurface">@color/white</item>
+        <item name="colorOnBackground">@color/black</item>
+        <item name="colorOnSurface">@color/black</item>
+        
+        <!-- Text colors -->
+        <item name="android:textColorPrimary">@color/black</item>
+        <item name="android:textColorSecondary">@color/gray</item>
+        
+        <!-- Card style -->
+        <item name="materialCardViewStyle">@style/Widget.App.CardView</item>
+        
+        <!-- Navigation bar color -->
+        <item name="android:navigationBarColor">@color/white</item>
+    </style>
+
+    <!-- Custom CardView style -->
+    <style name="Widget.App.CardView" parent="Widget.MaterialComponents.CardView">
+        <item name="cardBackgroundColor">@color/white</item>
+        <item name="cardElevation">4dp</item>
+        <item name="cardCornerRadius">12dp</item>
+        <item name="contentPadding">16dp</item>
+        <item name="rippleColor">@color/ripple_dark</item>
+    </style>
+
+    <!-- Text styles -->
+    <style name="TextAppearance.ActivaDashboard.Headline1" parent="TextAppearance.MaterialComponents.Headline1">
+        <item name="android:textSize">96sp</item>
+        <item name="android:letterSpacing">-0.015625</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
+    <style name="TextAppearance.ActivaDashboard.Headline2" parent="TextAppearance.MaterialComponents.Headline2">
+        <item name="android:textSize">60sp</item>
+        <item name="android:letterSpacing">-0.008333333</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
+    <style name="TextAppearance.ActivaDashboard.Headline3" parent="TextAppearance.MaterialComponents.Headline3">
+        <item name="android:textSize">48sp</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
+    <style name="TextAppearance.ActivaDashboard.Headline4" parent="TextAppearance.MaterialComponents.Headline4">
+        <item name="android:textSize">34sp</item>
+        <item name="android:letterSpacing">0.0073529412</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
+    <style name="TextAppearance.ActivaDashboard.Headline5" parent="TextAppearance.MaterialComponents.Headline5">
+        <item name="android:textSize">24sp</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
+    <style name="TextAppearance.ActivaDashboard.Headline6" parent="TextAppearance.MaterialComponents.Headline6">
+        <item name="android:textSize">20sp</item>
+        <item name="android:letterSpacing">0.0075</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="TextAppearance.ActivaDashboard.Subtitle1" parent="TextAppearance.MaterialComponents.Subtitle1">
+        <item name="android:textSize">16sp</item>
+        <item name="android:letterSpacing">0.009375</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
+    <style name="TextAppearance.ActivaDashboard.Subtitle2" parent="TextAppearance.MaterialComponents.Subtitle2">
+        <item name="android:textSize">14sp</item>
+        <item name="android:letterSpacing">0.0071428571</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="TextAppearance.ActivaDashboard.Body1" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="android:textSize">16sp</item>
+        <item name="android:letterSpacing">0.03125</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
+    <style name="TextAppearance.ActivaDashboard.Body2" parent="TextAppearance.MaterialComponents.Body2">
+        <item name="android:textSize">14sp</item>
+        <item name="android:letterSpacing">0.0178571429</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
+    <style name="TextAppearance.ActivaDashboard.Button" parent="TextAppearance.MaterialComponents.Button">
+        <item name="android:textSize">14sp</item>
+        <item name="android:letterSpacing">0.0892857143</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="TextAppearance.ActivaDashboard.Caption" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="android:textSize">12sp</item>
+        <item name="android:letterSpacing">0.0333333333</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
+    <style name="TextAppearance.ActivaDashboard.Overline" parent="TextAppearance.MaterialComponents.Overline">
+        <item name="android:textSize">10sp</item>
+        <item name="android:letterSpacing">0.15</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <!-- Number text style -->
+    <style name="TextAppearance.ActivaDashboard.Number" parent="TextAppearance.ActivaDashboard.Body1">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:letterSpacing">0.02</item>
+        <item name="android:textColor">@color/primary</item>
+    </style>
+</resources>

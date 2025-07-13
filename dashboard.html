@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Activa Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <style>
+        body { 
+            font-family: Arial; 
+            margin: 20px; 
+            background-color: #f0f0f0;
+        }
+        .container { 
+            max-width: 600px; 
+            margin: 0 auto; 
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .status { 
+            margin: 20px 0; 
+            padding: 10px; 
+            border-radius: 5px; 
+        }
+        .success { 
+            background-color: #dff0d8; 
+            color: #3c763d; 
+        }
+        .error { 
+            background-color: #f2dede; 
+            color: #a94442; 
+        }
+        .nav-menu {
+            background-color: #333;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-around;
+        }
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+        .nav-menu a:hover { 
+            background-color: #444; 
+        }
+        .nav-menu a.active { 
+            background-color: #4CAF50; 
+        }
+        .page {
+            display: none;
+        }
+        .page.active {
+            display: block;
+        }
+        .data-display {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .data-row {
+            margin: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            min-height: 30px;
+        }
+        .label { 
+            font-weight: bold; 
+            color: #666;
+            flex: 1;
+        }
+        .value { 
+            color: #333; 
+            font-size: 1.1em;
+            min-width: 80px;
+            text-align: right;
+            font-family: monospace;
+            padding-left: 10px;
+        }
+        .unit {
+            color: #666;
+            margin-left: 5px;
+            min-width: 40px;
+            text-align: left;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+        button:hover { 
+            background-color: #45a049; 
+        }
+        button.danger {
+            background-color: #dc3545;
+        }
+        button.danger:hover {
+            background-color: #c82333;
+        }
+        .refresh-btn {
+            background-color: #17a2b8;
+        }
+        .refresh-btn:hover {
+            background-color: #138496;
+        }
+        .gps-controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        .gps-status {
+            text-align: center;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+        .file-drop-zone {
+            border: 2px dashed #ccc;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: border-color 0.3s ease;
+        }
+        .file-drop-zone:hover {
+            border-color: #4CAF50;
+        }
+        .file-input-label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+        .upload-icon {
+            font-size: 2em;
+        }
+        .hidden {
+            display: none;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background-color: #f0f0f0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            background-color: #4CAF50;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav-menu">
+            <a href="#" onclick="showPage('gps')" id="nav-gps" class="active">GPS Sender</a>
+            <a href="#" onclick="showPage('dashboard')" id="nav-dashboard">Dashboard</a>
+            <a href="#" onclick="showPage('update')" id="nav-update">Firmware Update</a>
+        </div>
+
+        <!-- GPS Sender Page -->
+        <div id="gps-page" class="page active">
+            <h1>GPS Sender</h1>
+            <div id="status" class="status"></div>
+            
+            <div class="data-display">
+                <div class="data-row">
+                    <span class="label">Speed:</span>
+                    <span id="speed" class="value">0</span> km/h
+                </div>
+                <div class="data-row">
+                    <span class="label">Latitude:</span>
+                    <span id="latitude" class="value">0</span>
+                </div>
+                <div class="data-row">
+                    <span class="label">Longitude:</span>
+                    <span id="longitude" class="value">0</span>
+                </div>
+            </div>
+
+            <div class="gps-controls">
+                <button onclick="startGPS()">Start GPS</button>
+                <button onclick="stopGPS()">Stop GPS</button>
+            </div>
+        </div>
+
+        <!-- Dashboard Page -->
+        <div id="dashboard-page" class="page">
+            <h1>Dashboard</h1>
+            <div id="dashboard-status" class="status"></div>
+            
+            <div class="data-display">
+                <div class="data-row">
+                    <span class="label">Speed:</span>
+                    <span id="dashboard-speed" class="value">0</span>
+                    <span class="unit">km/h</span>
+                </div>
+                <div class="data-row">
+                    <span class="label">Fuel Level:</span>
+                    <span id="dashboard-fuel-level" class="value">0</span>
+                    <span class="unit">%</span>
+                </div>
+                <div class="data-row">
+                    <span class="label">Fuel Amount:</span>
+                    <span id="dashboard-fuel-amount" class="value">0</span>
+                    <span class="unit">L</span>
+                </div>
+                <div class="data-row">
+                    <span class="label">Instant Economy:</span>
+                    <span id="dashboard-economy" class="value">0</span>
+                    <span class="unit">km/L</span>
+                </div>
+            </div>
+
+            <div class="data-display">
+                <div class="data-row">
+                    <span class="label">Total Distance:</span>
+                    <span id="dashboard-distance" class="value">0</span>
+                    <span class="unit">km</span>
+                </div>
+                <button onclick="resetOdometer()" class="danger">Reset Odometer</button>
+            </div>
+
+            <div class="data-display">
+                <div class="data-row">
+                    <span class="label">Trip 1:</span>
+                    <span id="dashboard-trip1" class="value">0</span>
+                    <span class="unit">km</span>
+                </div>
+                <div class="data-row">
+                    <span class="label">Trip 1 Average:</span>
+                    <span id="dashboard-trip1-avg" class="value">0</span>
+                    <span class="unit">km/L</span>
+                </div>
+                <button onclick="resetTrip(1)" class="danger">Reset Trip 1</button>
+            </div>
+
+            <div class="data-display">
+                <div class="data-row">
+                    <span class="label">Trip 2:</span>
+                    <span id="dashboard-trip2" class="value">0</span>
+                    <span class="unit">km</span>
+                </div>
+                <div class="data-row">
+                    <span class="label">Trip 2 Average:</span>
+                    <span id="dashboard-trip2-avg" class="value">0</span>
+                    <span class="unit">km/L</span>
+                </div>
+                <button onclick="resetTrip(2)" class="danger">Reset Trip 2</button>
+            </div>
+
+            <div class="data-display">
+                <div class="data-row">
+                    <span class="label">Fuel Fill Average:</span>
+                    <span id="dashboard-fuel-fill-avg" class="value">0</span>
+                    <span class="unit">km/L</span>
+                </div>
+                <div class="data-row">
+                    <span class="label">Distance Since Fill:</span>
+                    <span id="dashboard-fuel-fill-dist" class="value">0</span>
+                    <span class="unit">km</span>
+                </div>
+                <div class="data-row">
+                    <span class="label">Last Fill Amount:</span>
+                    <span id="dashboard-last-fill" class="value">0</span>
+                    <span class="unit">L</span>
+                </div>
+            </div>
+
+            <button onclick="resetAllTrips()" class="danger">Reset All Trips</button>
+            <button onclick="refreshDashboard()" class="refresh-btn">Refresh Data</button>
+        </div>
+
+        <!-- Firmware Update Page -->
+        <div id="update-page" class="page">
+            <h1>Firmware Update</h1>
+            <div id="update-status" class="status"></div>
+            
+            <div class="data-display">
+                <div class="data-row">
+                    <span class="label">Current Version:</span>
+                    <span id="current-version" class="value">1.0.0</span>
+                </div>
+            </div>
+
+            <div class="data-display">
+                <div class="data-row">
+                    <span class="label">Update Credentials</span>
+                </div>
+                <input type="text" id="username" placeholder="Username" value="admin" class="input-field">
+                <input type="password" id="password" placeholder="Password" value="admin" class="input-field">
+            </div>
+
+            <form id="uploadForm" enctype="multipart/form-data">
+                <div class="data-display file-drop-zone" id="dropZone">
+                    <div class="file-input-label" id="fileInputLabel">
+                        <i class="upload-icon">📁</i>
+                        <span>Click to select firmware file or drag and drop here</span>
+                    </div>
+                    <input type="file" id="fileInput" name="update" accept=".bin" class="hidden">
+                    <div id="fileName" class="value"></div>
+                </div>
+
+                <div class="data-display">
+                    <div class="data-row">
+                        <span class="label">Update Progress</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div id="progressBar" class="progress-bar-fill"></div>
+                    </div>
+                    <div id="progressText" class="value">0%</div>
+                </div>
+
+                <button type="submit" class="update-btn">Update Firmware</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Navigation
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            document.querySelectorAll('.nav-menu a').forEach(link => {
+                link.classList.remove('active');
+            });
+            document.getElementById(pageId + '-page').classList.add('active');
+            document.getElementById('nav-' + pageId).classList.add('active');
+        }
+
+        // GPS Functions
+        let watchId = null;
+
+        function updateStatus(message, isError = false) {
+            const statusDiv = document.getElementById('status');
+            statusDiv.innerHTML = message;
+            statusDiv.className = 'status ' + (isError ? 'error' : 'success');
+        }
+
+        function updateDisplay(speed, lat, lng) {
+            document.getElementById('speed').textContent = speed.toFixed(1);
+            document.getElementById('latitude').textContent = lat.toFixed(6);
+            document.getElementById('longitude').textContent = lng.toFixed(6);
+        }
+
+        function sendGPSData(position) {
+            const speed = position.coords.speed * 3.6;
+            const lat = position.coords.latitude;
+            const lng = position.coords.longitude;
+
+            updateDisplay(speed, lat, lng);
+
+            fetch('/gps', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `speed=${speed}&lat=${lat}&lng=${lng}`
+            })
+            .then(response => {
+                if (!response.ok) throw new Error('Network response was not ok');
+                return response.text();
+            })
+            .then(data => {
+                console.log('GPS data sent successfully');
+            })
+            .catch(error => {
+                console.error('Error sending GPS data:', error);
+                updateStatus('Error sending GPS data: ' + error.message, true);
+            });
+        }
+
+        function startGPS() {
+            if (!navigator.geolocation) {
+                updateStatus('Geolocation is not supported by your browser', true);
+                return;
+            }
+
+            updateStatus('Requesting GPS permission...');
+            
+            const options = {
+                enableHighAccuracy: true,
+                timeout: 5000,
+                maximumAge: 0
+            };
+
+            watchId = navigator.geolocation.watchPosition(
+                position => {
+                    updateStatus('GPS Active - Sending Data');
+                    sendGPSData(position);
+                },
+                error => {
+                    let errorMessage = 'Error getting location: ';
+                    switch(error.code) {
+                        case error.PERMISSION_DENIED:
+                            errorMessage += 'Please allow GPS access';
+                            break;
+                        case error.POSITION_UNAVAILABLE:
+                            errorMessage += 'Location information unavailable';
+                            break;
+                        case error.TIMEOUT:
+                            errorMessage += 'Location request timed out';
+                            break;
+                        default:
+                            errorMessage += error.message;
+                    }
+                    updateStatus(errorMessage, true);
+                },
+                options
+            );
+        }
+
+        function stopGPS() {
+            if (watchId !== null) {
+                navigator.geolocation.clearWatch(watchId);
+                watchId = null;
+                updateStatus('GPS tracking stopped');
+                updateDisplay(0, 0, 0);
+            }
+        }
+
+        // Dashboard Functions
+        function updateDashboard(data) {
+            document.getElementById('dashboard-speed').textContent = data.speed.toFixed(1);
+            document.getElementById('dashboard-fuel-level').textContent = data.fuelPercentage.toFixed(1);
+            document.getElementById('dashboard-fuel-amount').textContent = data.fuelLiters.toFixed(1);
+            document.getElementById('dashboard-economy').textContent = data.instantEconomy.toFixed(1);
+            document.getElementById('dashboard-distance').textContent = data.totalDistance.toFixed(2);
+            document.getElementById('dashboard-trip1').textContent = data.trip1Distance.toFixed(2);
+            document.getElementById('dashboard-trip1-avg').textContent = data.trip1Average.toFixed(1);
+            document.getElementById('dashboard-trip2').textContent = data.trip2Distance.toFixed(2);
+            document.getElementById('dashboard-trip2-avg').textContent = data.trip2Average.toFixed(1);
+            document.getElementById('dashboard-fuel-fill-avg').textContent = data.fuelFillAverage.toFixed(1);
+            document.getElementById('dashboard-fuel-fill-dist').textContent = data.fuelFillDistance.toFixed(1);
+            document.getElementById('dashboard-last-fill').textContent = data.lastFuelFill.toFixed(1);
+        }
+
+        function refreshDashboard() {
+            fetch('/dashboard-data')
+                .then(response => response.json())
+                .then(data => {
+                    updateDashboard(data);
+                    document.getElementById('dashboard-status').innerHTML = 'Data refreshed successfully';
+                    document.getElementById('dashboard-status').className = 'status success';
+                })
+                .catch(error => {
+                    document.getElementById('dashboard-status').innerHTML = 'Error refreshing data: ' + error.message;
+                    document.getElementById('dashboard-status').className = 'status error';
+                });
+        }
+
+        function resetTrip(tripNum) {
+            if (confirm(`Are you sure you want to reset Trip ${tripNum}?`)) {
+                fetch(`/reset-trip/${tripNum}`, { method: 'POST' })
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById('dashboard-status').innerHTML = `Trip ${tripNum} reset successfully`;
+                        document.getElementById('dashboard-status').className = 'status success';
+                        refreshDashboard();
+                    })
+                    .catch(error => {
+                        document.getElementById('dashboard-status').innerHTML = 'Error resetting trip: ' + error.message;
+                        document.getElementById('dashboard-status').className = 'status error';
+                    });
+            }
+        }
+
+        function resetOdometer() {
+            if (confirm('Are you sure you want to reset the odometer? This cannot be undone!')) {
+                fetch('/reset-odometer', { method: 'POST' })
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById('dashboard-status').innerHTML = 'Odometer reset successfully';
+                        document.getElementById('dashboard-status').className = 'status success';
+                        refreshDashboard();
+                    })
+                    .catch(error => {
+                        document.getElementById('dashboard-status').innerHTML = 'Error resetting odometer: ' + error.message;
+                        document.getElementById('dashboard-status').className = 'status error';
+                    });
+            }
+        }
+
+        function resetAllTrips() {
+            if (confirm('Are you sure you want to reset all trips?')) {
+                fetch('/reset-all-trips', { method: 'POST' })
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById('dashboard-status').innerHTML = 'All trips reset successfully';
+                        document.getElementById('dashboard-status').className = 'status success';
+                        refreshDashboard();
+                    })
+                    .catch(error => {
+                        document.getElementById('dashboard-status').innerHTML = 'Error resetting trips: ' + error.message;
+                        document.getElementById('dashboard-status').className = 'status error';
+                    });
+            }
+        }
+
+        // Firmware Update Functions
+        const form = document.getElementById('uploadForm');
+        const fileInput = document.getElementById('fileInput');
+        const fileInputLabel = document.getElementById('fileInputLabel');
+        const fileName = document.getElementById('fileName');
+        const dropZone = document.getElementById('dropZone');
+
+        fileInputLabel.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length) {
+                fileName.textContent = e.target.files[0].name;
+            }
+        });
+
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.style.borderColor = '#4CAF50';
+        });
+
+        dropZone.addEventListener('dragleave', (e) => {
+            e.preventDefault();
+            dropZone.style.borderColor = '#ccc';
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.style.borderColor = '#ccc';
+            const files = e.dataTransfer.files;
+            if (files.length) {
+                fileInput.files = files;
+                fileName.textContent = files[0].name;
+            }
+        });
+
+        form.onsubmit = async (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData(form);
+            const file = formData.get('update');
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            if (!file || !file.name) {
+                document.getElementById('update-status').innerHTML = 'Please select a firmware file';
+                document.getElementById('update-status').className = 'status error';
+                return;
+            }
+
+            try {
+                document.getElementById('update-status').innerHTML = 'Uploading firmware...';
+                document.getElementById('update-status').className = 'status';
+                document.getElementById('progressBar').style.width = '0%';
+                document.getElementById('progressText').textContent = '0%';
+                
+                const response = await fetch('/update', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': 'Basic ' + btoa(username + ':' + password)
+                    },
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const result = await response.text();
+                document.getElementById('update-status').innerHTML = 'Update successful! Device will restart...';
+                document.getElementById('update-status').className = 'status success';
+                document.getElementById('progressBar').style.width = '100%';
+                document.getElementById('progressText').textContent = '100%';
+                
+                setTimeout(() => {
+                    window.location.href = '/';
+                }, 5000);
+                
+            } catch (error) {
+                document.getElementById('update-status').innerHTML = 'Update failed: ' + error.message;
+                document.getElementById('update-status').className = 'status error';
+                document.getElementById('progressBar').style.width = '0%';
+                document.getElementById('progressText').textContent = '0%';
+            }
+        };
+
+        // Initial setup
+        window.onload = function() {
+            // Check connection
+            fetch('/status')
+                .then(response => response.json())
+                .then(data => {
+                    updateStatus('Connected to ESP8266. Ready to start GPS tracking.');
+                })
+                .catch(error => {
+                    updateStatus('Failed to connect to ESP8266. Please check your WiFi connection.', true);
+                });
+
+            // Start dashboard refresh
+            refreshDashboard();
+            setInterval(refreshDashboard, 5000);
+        };
+    </script>
+</body>
+</html> 

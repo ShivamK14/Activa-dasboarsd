@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.ActivaDashboard" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:windowLightNavigationBar">true</item>
+    </style>
+    <style name="Theme.ActivaDashboard.Night" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:windowLightNavigationBar">false</item>
+    </style>
+</resources> 
